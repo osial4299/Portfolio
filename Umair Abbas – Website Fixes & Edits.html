@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Umair Abbas – Website Fixes &amp; Edits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F4F8;--surface:#fff;--ink:#14213D;--muted:#55627A;--line:#D5DCE6;--accent:#2F5BFF;--on-accent:#fff;--bad:#D6334A;--good:#13875A;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1626;--surface:#18223A;--ink:#E8EDF7;--muted:#9AA7C0;--line:#2A3752;--accent:#7F99FF;--on-accent:#0F1626;--bad:#FF6B7F;--good:#3DD598}}
+:root[data-theme="dark"]{--bg:#0F1626;--surface:#18223A;--ink:#E8EDF7;--muted:#9AA7C0;--line:#2A3752;--accent:#7F99FF;--on-accent:#0F1626;--bad:#FF6B7F;--good:#3DD598}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
+header strong{font:800 1.15rem "Bricolage Grotesque",sans-serif}
+header nav a{margin-left:1.25rem;text-decoration:none;color:var(--muted)}
+header nav a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:2.5rem;align-items:center;padding:2.5rem 0 4.5rem}
+.hero h1{font-size:clamp(2.4rem,6vw,4.1rem);font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--muted);max-width:32rem;margin:1.25rem 0 1.75rem}
+.btn{display:inline-block;background:var(--accent);color:var(--on-accent);padding:.8rem 1.4rem;border-radius:8px;font-weight:500;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:inherit;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);margin-left:.5rem}
+.tools{margin-top:1.5rem;color:var(--muted);font-size:.95rem}
+
+/* the one big moment: a broken page that fixes itself */
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.bar{display:flex;align-items:center;gap:.4rem;padding:.6rem .8rem;border-bottom:1px solid var(--line);color:var(--muted);font-size:.8rem}
+.bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.state{margin-left:auto;font-weight:500;color:var(--bad);transition:color .4s}
+.fixed .state{color:var(--good)}
+.page{position:relative;height:250px;padding:1rem;overflow:hidden}
+.page *{transition:transform .8s cubic-bezier(.2,.9,.3,1.2),background .5s,margin .8s,width .8s}
+.pnav{display:flex;gap:.8rem;font-size:.85rem;color:var(--muted)}
+.pnav b{color:var(--ink);margin-right:auto}
+.ptitle{font:800 1.7rem "Bricolage Grotesque",sans-serif;margin-top:1.1rem}
+.ptext{font-size:.85rem;color:var(--muted);max-width:15rem;margin:.3rem 0 .8rem}
+.pbtn{display:inline-block;background:var(--accent);color:var(--on-accent);padding:.4rem .9rem;border-radius:6px;font-size:.85rem}
+.pbox{position:absolute;right:1rem;top:3.6rem;width:34%;height:110px;border-radius:8px;background:var(--line)}
+/* broken state */
+.broken .pnav{flex-direction:column;gap:0}
+.broken .pnav span{transform:translateX(18px) rotate(4deg)}
+.broken .ptitle{transform:rotate(-4deg) translate(8px,16px)}
+.broken .ptext{margin-left:-14px;max-width:30rem;color:var(--bad)}
+.broken .pbtn{transform:translate(120px,-34px);background:var(--bad)}
+.broken .pbox{width:80%;transform:translate(24px,96px) rotate(3deg)}
+.code{margin:0;padding:.8rem 1rem;border-top:1px solid var(--line);font:.85rem/1.6 ui-monospace,Menlo,Consolas,monospace;min-height:3.9rem}
+.code .d{color:var(--bad)}.code .a{color:var(--good)}
+.fixbtn{display:block;width:100%;border:0;border-top:1px solid var(--line);background:none;color:var(--accent);padding:.7rem;font:500 .95rem "IBM Plex Sans",sans-serif;cursor:pointer}
+.fixbtn:hover{background:var(--bg)}
+
+section{padding:4rem 0;border-top:1px solid var(--line)}
+section>.wrap>h2{font-size:clamp(1.7rem,4vw,2.4rem);margin-bottom:.6rem}
+.lead{color:var(--muted);max-width:34rem;margin:0 0 2.2rem}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem 2.5rem}
+.svc div{border-left:3px solid var(--line);padding-left:1rem;transition:border-color .3s}
+.svc div:hover{border-color:var(--accent)}
+.svc h3{font-size:1.2rem;margin-bottom:.35rem}
+.svc p{margin:0;color:var(--muted)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;counter-reset:s}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--accent);color:var(--on-accent);font:700 1rem "Bricolage Grotesque",sans-serif;margin-bottom:.8rem}
+.steps h3{font-size:1.2rem;margin-bottom:.3rem}
+.steps p{margin:0;color:var(--muted)}
+.contact{text-align:center}
+.contact .lead{margin:0 auto 1.6rem}
+footer{padding:2rem 0;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid var(--line)}
+
+.js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.js .rv.in{opacity:1;transform:none}
+@media(max-width:780px){.hero{grid-template-columns:1fr;padding-top:1rem}header nav a:first-child{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+<div class="wrap">
+  <header>
+    <strong>Umair Abbas</strong>
+    <nav><a href="#services">What I fix</a><a href="#process">How it works</a><a href="#contact">Hire me</a></nav>
+  </header>
+
+  <main>
+  <div class="hero">
+    <div>
+      <h1>I fix and edit websites so they work the way they should.</h1>
+      <p>Broken layouts, messy code, text and images that need changing. I handle it in VS Code with HTML and CSS, and send back clean files.</p>
+      <a class="btn" href="#contact">Hire me on Fiverr</a><a class="btn ghost" href="#services">See what I do</a>
+      <div class="tools">Tools: VS Code, HTML, CSS</div>
+    </div>
+    <div class="stage broken" id="stage" aria-label="Demo of a broken web page being fixed">
+      <div class="bar"><i></i><i></i><i></i><span class="state" id="state">Broken</span></div>
+      <div class="page">
+        <div class="pnav"><b>Corner Bakery</b><span>Menu</span><span>About</span></div>
+        <div class="ptitle">Fresh bread daily</div>
+        <div class="ptext">Baked at 5am and ready for you by 7.</div>
+        <span class="pbtn">Order now</span>
+        <div class="pbox"></div>
+      </div>
+      <pre class="code" id="code"><span class="d">- width: 120%; margin-left: -14px;</span></pre>
+      <button class="fixbtn" id="toggle" type="button">Fix it</button>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap" style="padding:0">
+      <h2>What I can do for you</h2>
+      <p class="lead">Send me your site and tell me what is wrong or what you want changed.</p>
+      <div class="svc">
+        <div class="rv"><h3>Fix layout bugs</h3><p>Overlapping text, broken columns, buttons and images sitting in the wrong place.</p></div>
+        <div class="rv"><h3>Make it mobile-friendly</h3><p>Your site looks right on phones, tablets and desktops.</p></div>
+        <div class="rv"><h3>Edit text, images and sections</h3><p>Update your content or add new sections that match your design.</p></div>
+        <div class="rv"><h3>Fix colors, fonts and spacing</h3><p>Make every page look consistent and easy to read.</p></div>
+        <div class="rv"><h3>Clean up HTML and CSS</h3><p>Tidy messy code so future changes are quicker and safer.</p></div>
+        <div class="rv"><h3>Add simple animations</h3><p>Hover effects, smooth scrolling and gentle entrance effects in CSS.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap" style="padding:0">
+      <h2>How it works</h2>
+      <p class="lead">Simple and clear, from your message to your final files.</p>
+      <ol class="steps">
+        <li class="rv"><h3>You send the problem</h3><p>Share your files or link and describe what needs fixing.</p></li>
+        <li class="rv"><h3>I find it and fix it</h3><p>I work in VS Code, change only what is needed, and test the result.</p></li>
+        <li class="rv"><h3>You review and approve</h3><p>Ask for small tweaks, then get your final files.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Have a website that needs fixing?</h2>
+      <p class="lead">Message me on Fiverr with a short description of the problem.</p>
+      <!-- Replace the link below with your Fiverr gig or profile URL -->
+      <a class="btn" href="https://www.fiverr.com/" target="_blank" rel="noopener">Hire me on Fiverr</a>
+    </div>
+  </section>
+  </main>
+</div>
+<footer>© <span id="yr">2026</span> Umair Abbas</footer>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'),btn=document.getElementById('toggle'),
+      state=document.getElementById('state'),code=document.getElementById('code');
+  function set(fixed){
+    stage.classList.toggle('broken',!fixed);
+    stage.classList.toggle('fixed',fixed);
+    state.textContent=fixed?'Fixed':'Broken';
+    btn.textContent=fixed?'Break it again':'Fix it';
+    code.innerHTML=fixed
+      ?'<span class="a">+ max-width: 100%; margin-left: 0;</span>'
+      :'<span class="d">- width: 120%; margin-left: -14px;</span>';
+  }
+  setTimeout(function(){set(true)},1600);
+  btn.addEventListener('click',function(){set(stage.classList.contains('broken'))});
+
+  var items=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){var i=[].indexOf.call(items,e.target)%3;
+        e.target.style.transitionDelay=(i*0.1)+'s';e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+    items.forEach(function(el){io.observe(el)});
+  }else{items.forEach(function(el){el.classList.add('in')})}
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
